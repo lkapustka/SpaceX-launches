@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import HomeBox from './HomeBox.vue'
+import HomeBox from '../components/HomeBox.vue'
 import { useLaunches } from '../composables/useLaunches'
 
 const { data: launches, getLaunches, formatDate } = useLaunches()
 
 await getLaunches()
-
-defineEmits(['showDetail'])
 </script>
 
 
@@ -26,10 +24,10 @@ defineEmits(['showDetail'])
 
   <home-box
     v-for="launch in launches"
+    :id="launch.id"
     :flight-number="launch.flight_number"
     :name="launch.name"
     :date="formatDate(launch.date_local)"
     :img-source="launch.links.flickr.original?.[0]"
-    @click="$emit('showDetail', launch.id)"
   />
 </template>

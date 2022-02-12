@@ -24,7 +24,9 @@ const images = computed(() => [...launch.value.links.flickr.original, ...rocketI
 
 <template>
   <div>
-    <button>Back home</button>
+    <router-link to="/">
+      <button>Back home</button>
+    </router-link>
     <p>Szczegóły lotu # {{ launch.flight_number }}</p>
   </div>
 
@@ -41,7 +43,7 @@ const images = computed(() => [...launch.value.links.flickr.original, ...rocketI
   </div>
 
   <div v-for="image in images">
-     <img :src="image" />
+    <img :src="image" />
   </div>
 
   <div>
