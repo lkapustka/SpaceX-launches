@@ -1,7 +1,19 @@
-<script setup lang="ts">
-import Counter from './components/Counter.vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <Counter />
+  <div id="app">
+    <router-view v-slot="{ Component }">
+      <suspense>
+
+        <template #default>
+          <component :is="Component" />
+        </template>
+
+        <template #fallback>
+          <h1>Loading...</h1>
+        </template>
+
+      </suspense>
+    </router-view>
+  </div>
 </template>

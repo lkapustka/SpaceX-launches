@@ -1,37 +1,42 @@
 <script setup lang="ts">
 defineProps({
-    flightNumber: {
-        type: Number,
-        required: true,
-    },
+  id: {
+    type: String,
+    required: true,
+  },
 
-    name: {
-        type: String,
-        required: true,
-    },
+  flightNumber: {
+    type: Number,
+    required: true,
+  },
 
-    date: {
-        type: String,
-        required: true,
-    },
+  name: {
+    type: String,
+    required: true,
+  },
 
-    imgSource: {
-        type: String,
-        default: undefined,
-    }
+  date: {
+    type: String,
+    required: true,
+  },
+
+  imgSource: {
+    type: String,
+    default: undefined,
+  },
 })
-
-defineEmits(['click'])
 </script>
 
 <template>
-<div>
-    <img :src="imgSource">
-</div>
-<div>
+  <div>
+    <img :src="imgSource" />
+  </div>
+  <div>
     <p>Numer lotu: {{ flightNumber }}</p>
     <p>Nazwa lotu: {{ name }}</p>
     <p>Data: {{ date }}</p>
-    <button @click="$emit('click')">więcej ></button>
-</div>
+    <router-link :to="{ name: 'detail', params: { id } }">
+      <button>więcej ></button>
+    </router-link>
+  </div>
 </template>
