@@ -20,6 +20,8 @@ await getRocketById(launch.value.rocket)
 await getLaunchpadById(launch.value.launchpad)
 
 const images = computed(() => [...launch.value.links.flickr.original, ...rocketImages.value])
+
+const formatStatus = (status: string) => status ? 'Udany' : 'Nie udany'
 </script>
 
 <template>
@@ -33,7 +35,7 @@ const images = computed(() => [...launch.value.links.flickr.original, ...rocketI
   <div>
     <p>Lot: {{ launch.name }}</p>
     <p>Data lotu: {{ formatDate(launch.date_local) }}</p>
-    <p>Status: {{ launch.success }}</p>
+    <p>Status: {{ formatStatus(launch.success) }}</p>
   </div>
 
   <div>
