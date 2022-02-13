@@ -1,19 +1,27 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div id="app">
-    <router-view v-slot="{ Component }">
-      <suspense>
+  <router-view v-slot="{ Component }">
+    <suspense>
 
-        <template #default>
-          <component :is="Component" />
-        </template>
+      <template #default>
+        <component :is="Component" />
+      </template>
 
-        <template #fallback>
-          <h1>Loading...</h1>
-        </template>
+      <template #fallback>
+        <h1>Loading...</h1>
+      </template>
 
-      </suspense>
-    </router-view>
-  </div>
+    </suspense>
+  </router-view>
 </template>
+
+<style lang="scss">
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #F9F9F9;
+}
+</style>

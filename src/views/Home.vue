@@ -7,7 +7,6 @@ const { data: launches, getLaunches, formatDate } = useLaunches()
 await getLaunches()
 </script>
 
-
 <template>
   <label for="name">Nazwa lotu</label>
   <input id="name" />
@@ -22,12 +21,19 @@ await getLaunches()
 
   <span></span>
 
-  <home-box
-    v-for="launch in launches"
-    :id="launch.id"
-    :flight-number="launch.flight_number"
-    :name="launch.name"
-    :date="formatDate(launch.date_local)"
-    :img-source="launch.links.flickr.original?.[0]"
-  />
+  <div class="container">
+    <div class="row justify-content-center">
+
+      <home-box
+        v-for="launch in launches"
+        :key="launch.id"
+        :id="launch.id"
+        :flight-number="launch.flight_number"
+        :name="launch.name"
+        :date="formatDate(launch.date_local)"
+        :img-source="launch.links.flickr.original?.[0]"
+      />
+
+    </div>
+  </div>
 </template>
