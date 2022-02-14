@@ -28,29 +28,38 @@ defineProps({
 </script>
 
 <template>
-  <div class="col-11 col-sm-12 mb-4 p-0 d-md-flex flex-row shadow overflow-hidden b-radius">
-    <div class="d-md-block col-md-6 text-center bg-color" :class="{ 'd-none': !imgSource }">
-      <img class="img-fluid" :src="imgSource" />
-    </div>
+  <div class="col-12">
+    <div class="card flex-md-row">
 
-    <div class="col-md-6 p-3 p-md-4 d-md-flex flex-column justify-content-center">
-      <p class="mb-1"># {{ flightNumber }}</p>
-      <p class="mb-1 fw-bold fs-5">{{ name }}</p>
-      <p class="mb-5">{{ date }}</p>
-      <router-link
-        :to="{ name: 'detail', params: { id } }"
-        role="button"
-        class="btn btn-outline"
-      >
-        Więcej >
-      </router-link>
+      <div class="col-md-6">
+        <div class="h-100 d-md-block text-center bg-color" :class="{ 'd-none': !imgSource }">
+          <img class="img-fluid" :src="imgSource" />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card-body p-md-4">
+          <p class="mb-1"># {{ flightNumber }}</p>
+          <p class="mb-1 fs-5 fw-bold">{{ name }}</p>
+          <p class="mb-5">{{ date }}</p>
+          <router-link :to="{ name: 'detail', params: { id } }" class="btn btn-outline">
+            Więcej >
+          </router-link>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.b-radius {
-  border-radius: 10px;
+.card {
+  padding: 0;
+  margin-bottom: 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 0.5rem 1rem #00000026;
 }
 
 .bg-color {
@@ -58,8 +67,8 @@ defineProps({
 }
 
 .btn {
- border-color: #30C2D5;
- color: #30C2D5;
- width: 150px;
+  border-color: #30c2d5;
+  color: #30c2d5;
+  max-width: 150px;
 }
 </style>

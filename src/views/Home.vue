@@ -5,6 +5,8 @@ import { useLaunches } from '../composables/useLaunches'
 const { data: launches, getLaunches, formatDate } = useLaunches()
 
 await getLaunches()
+
+const showMore = () => {}
 </script>
 
 <template>
@@ -21,19 +23,20 @@ await getLaunches()
 
   <span></span>
 
-  <div class="container">
-    <div class="row justify-content-center">
-
-      <home-box
-        v-for="launch in launches"
-        :key="launch.id"
-        :id="launch.id"
-        :flight-number="launch.flight_number"
-        :name="launch.name"
-        :date="formatDate(launch.date_local)"
-        :img-source="launch.links.flickr.original?.[0]"
-      />
-
+  <div class="album py-5">
+    <div class="container">
+      <div class="row">
+        <home-box
+          v-for="launch in launches"
+          :key="launch.id"
+          :id="launch.id"
+          :flight-number="launch.flight_number"
+          :name="launch.name"
+          :date="formatDate(launch.date_local)"
+          :img-source="launch.links.flickr.original?.[0]"
+        />
+      </div>
+      <button @click="showMore">Załaduj więcej ></button>
     </div>
   </div>
 </template>
