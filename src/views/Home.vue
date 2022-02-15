@@ -1,30 +1,52 @@
 <script setup lang="ts">
-import HomeBox from '../components/HomeBox.vue'
+import { computed, ref } from 'vue'
 import { useLaunches } from '../composables/useLaunches'
+import HomeBox from '../components/HomeBox.vue'
 
-const { data: launches, getLaunches, formatDate } = useLaunches()
+const { data, getLaunches, formatDate } = useLaunches()
 
 await getLaunches()
 
-const showMore = () => {}
+const quantity = ref(20)
+
+const launches = computed(() => data.value.slice(0, quantity.value))
+
+const incrementBy20 = () => (quantity.value = quantity.value + 20)
+
+const search = () => {}
 </script>
 
 <template>
-  <label for="name">Nazwa lotu</label>
-  <input id="name" />
+  <form @submit.prevent class="pt-4">
+    <div class="container horizontal-line">
+      <div class="row">
 
-  <label for="date">Data lotu></label>
-  <input type="date" id="date" />
+        <div class="col-12 col-md-6 col-xl-3 mb-3">
+          <label for="name" class="form-label">Nazwa lotu</label>
+          <input type="text" id="name" class="form-control" placeholder="Wpisz nazwę" />
+        </div>
 
-  <input type="checkox" id="success-launches" />
-  <label for="success-launches">Pokaż tylko udane loty</label>
+        <div class="col-12 col-md-6 col-xl-3 mb-3">
+          <label for="date" class="form-label">Data lotu</label>
+          <input type="date" id="date" class="form-control" />
+        </div>
 
-  <button>Szukaj</button>
+        <div class="col-12 col-md-6 col-xl-3 mb-3 align-self-md-center mb-xl-4 align-self-xl-end">
+          <input type="checkbox" id="success-launches" class="form-check-input me-3" />
+          <label for="success-launches" class="form-check-label">Pokaż tylko udane loty</label>
+        </div>
 
-  <span></span>
+        <div class="col-12 col-md-6 col-xl-3 mb-3 align-self-xl-end">
+          <button type="submit" class="w-100 btn btn-color" @click="search()">Szukaj</button>
+        </div>
 
-  <div class="album py-5">
+      </div>
+    </div>
+  </form>
+
+  <div class="album py-4">
     <div class="container">
+
       <div class="row">
         <home-box
           v-for="launch in launches"
@@ -36,7 +58,28 @@ const showMore = () => {}
           :img-source="launch.links.flickr.original?.[0]"
         />
       </div>
-      <button @click="showMore">Załaduj więcej ></button>
+
+      <div class="position-relative mb-4">
+        <button class="btn position-absolute end-0" @click="incrementBy20()">
+          Załaduj więcej &gt
+        </button>
+      </div>
+
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.horizontal-line::after {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-top: 0.5rem;
+  background-color: #c3c3c3;
+}
+
+.btn-color {
+  background-color: #30c2d5;
+  color: #ffffff;
+}
+</style>
