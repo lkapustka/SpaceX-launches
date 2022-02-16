@@ -2,17 +2,18 @@ import { computed } from 'vue'
 import { useAxios } from './useAxios'
 
 export const useLaunches = () => {
-  const { get, getDataById, data } = useAxios()
+  const { getData, data } = useAxios()
 
-  const getLaunches = async () => await get('launches')
+  const getLaunches = async () => await getData('launches')
 
-  const getLaunchById = async (id: string) => {
-    await getLaunches()
-    getDataById(id)
+  const getLaunchById = async (id: string) => await getData(`launches/${id}`)
+
+  const sortLaunchesByNewest = () => {
+    data.value.sort((first: any, second: any) => second.date_unix - first.date_unix)
   }
 
-  const formatDate = (value: string) => {
-    return new Date(value).toLocaleDateString('en-CA')
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('en-CA')
   }
 
   return {
@@ -20,5 +21,6 @@ export const useLaunches = () => {
     getLaunches,
     getLaunchById,
     formatDate,
+    sortLaunchesByNewest,
   }
 }
