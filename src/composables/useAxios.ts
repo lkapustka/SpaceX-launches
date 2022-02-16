@@ -4,7 +4,7 @@ import { computed, ref } from 'vue'
 export const useAxios = () => {
   const data = ref()
 
-  const get = async (route: string) => {
+  const getData = async (route: string) => {
     try {
       const response = await axios.get(`https://api.spacexdata.com/v4/${route}`)
       data.value = await response.data
@@ -14,13 +14,8 @@ export const useAxios = () => {
     }
   }
 
-  const getDataById = (id: string) => {
-    data.value = data.value.find((object: any) => object.id === id)
-  }
-
   return {
     data: computed(() => data.value),
-    get,
-    getDataById
+    getData,
   }
 }

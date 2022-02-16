@@ -43,7 +43,7 @@ defineProps({
           <p class="mb-1 fs-5 fw-bold">{{ name }}</p>
           <p class="mb-5">{{ date }}</p>
           <router-link :to="{ name: 'detail', params: { id } }" class="btn btn-outline">
-            Więcej >
+            Więcej &gt
           </router-link>
         </div>
       </div>
