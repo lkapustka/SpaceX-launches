@@ -3,7 +3,11 @@ import { ref } from 'vue'
 import Datepicker from 'vue3-date-time-picker'
 import 'vue3-date-time-picker/dist/main.css'
 
+defineEmits(['submitDate'])
+
 const date = ref(new Date())
+
+const textInputOptions = ref({ format: 'yyyy/MM/dd - yyyy/MM/dd' })
 
 const format = (dates: Date[]): string => {
   const firstDate = dates[0].toLocaleDateString('en-CA')
@@ -16,8 +20,6 @@ const format = (dates: Date[]): string => {
 
   return `${firstDate} - ${secondDate}`
 }
-
-const textInputOptions = ref({ format: 'yyyy/MM/dd - yyyy/MM/dd' })
 </script>
 
 <template>
@@ -35,5 +37,6 @@ const textInputOptions = ref({ format: 'yyyy/MM/dd - yyyy/MM/dd' })
     :preview-format="format"
     placeholder="RRRR/MM/DD - RRRR/MM/DD"
     input-class-name="form-control"
-/>
+    @update:model-value="$emit('submitDate', date)"
+  />
 </template>

@@ -2,18 +2,29 @@
 import { computed, ref } from 'vue'
 import { useLaunches } from '../composables/useLaunches'
 import HomeBox from '../components/HomeBox.vue'
+import HomeDatePicker from '../components/HomeDatePicker.vue'
 
-const { data, getLaunches, formatDate } = useLaunches()
+const { data, getLaunches, formatDate, sortLaunchesByNewest } = useLaunches()
 
 await getLaunches()
+
+sortLaunchesByNewest()
 
 const quantity = ref(20)
 
 const launches = computed(() => data.value.slice(0, quantity.value))
 
-const incrementBy20 = () => (quantity.value = quantity.value + 20)
+const incrementBy20 = () => quantity.value = quantity.value + 20
+
+
+
+const getDate = (dates: Date[]) => {}
 
 const search = () => {}
+
+const launchName = ref()
+
+const isChecked = ref(false)
 </script>
 
 <template>
@@ -23,16 +34,15 @@ const search = () => {}
 
         <div class="col-12 col-md-6 col-xl-3 mb-3">
           <label for="name" class="form-label">Nazwa lotu</label>
-          <input type="text" id="name" class="form-control" placeholder="Wpisz nazwę" />
+          <input type="text" id="name" class="form-control" placeholder="Wpisz nazwę" v-model="launchName"/>
         </div>
 
         <div class="col-12 col-md-6 col-xl-3 mb-3">
-          <label for="date" class="form-label">Data lotu</label>
-          <input type="date" id="date" class="form-control" />
+          <home-date-picker @submit-date="getDate"/>
         </div>
 
         <div class="col-12 col-md-6 col-xl-3 mb-3 align-self-md-center mb-xl-4 align-self-xl-end">
-          <input type="checkbox" id="success-launches" class="form-check-input me-3" />
+          <input type="checkbox" id="success-launches" class="form-check-input me-3" v-model="isChecked" />
           <label for="success-launches" class="form-check-label">Pokaż tylko udane loty</label>
         </div>
 
