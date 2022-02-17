@@ -51,7 +51,7 @@ export const useSearch = (rawData: any) => {
     return launches.filter((launch: any) => launch.date_unix >= from && launch.date_unix <= to)
   }
 
-  const searchForLanchesFromDatesRange = (dates: Date[]) => {
+  const searchForLaunchesFromDatesRange = (dates: Date[]) => {
     const formatedDates = convertDatesToUnix(dates)
 
     if (inProgress.value && formatedDates) {
@@ -65,7 +65,7 @@ export const useSearch = (rawData: any) => {
   const search = (searchedName: string, isChecked: boolean, dates: Date[]) => {
     resetData()
 
-    searchForLanchesFromDatesRange(dates)
+    searchForLaunchesFromDatesRange(dates)
 
     searchForLaunchesByName(searchedName)
 
