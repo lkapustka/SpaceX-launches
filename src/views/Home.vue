@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useLaunches } from '../composables/useLaunches'
+import { useSearch } from '../composables/useSearch'
 import HomeBox from '../components/HomeBox.vue'
 import HomeDatePicker from '../components/HomeDatePicker.vue'
 
@@ -10,21 +11,25 @@ await getLaunches()
 
 sortLaunchesByNewest()
 
-const quantity = ref(20)
+const { searchResult, search } = useSearch(data.value)
 
-const launches = computed(() => data.value.slice(0, quantity.value))
+const launchesToDisplay = computed(() => filteredLaunches.value || rawLaunches.value)
 
-const incrementBy20 = () => quantity.value = quantity.value + 20
+const quantityToDisplay = ref(20)
 
+const incrementBy20 = () => (quantityToDisplay.value = quantityToDisplay.value + 20)
 
+const rawLaunches = computed(() => data.value.slice(0, quantityToDisplay.value))
 
-const getDate = (dates: Date[]) => {}
+const filteredLaunches = computed(() => searchResult.value?.slice(0, quantityToDisplay.value))
 
-const search = () => {}
-
-const launchName = ref()
+const searchedName = ref('')
 
 const isChecked = ref(false)
+
+const dates = ref()
+
+const getDates = (date: Date[]) => (dates.value = [date[0], date[1]])
 </script>
 
 <template>
@@ -34,20 +39,37 @@ const isChecked = ref(false)
 
         <div class="col-12 col-md-6 col-xl-3 mb-3">
           <label for="name" class="form-label">Nazwa lotu</label>
-          <input type="text" id="name" class="form-control" placeholder="Wpisz nazwę" v-model="launchName"/>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            placeholder="Wpisz nazwę"
+            v-model="searchedName"
+          />
         </div>
 
         <div class="col-12 col-md-6 col-xl-3 mb-3">
-          <home-date-picker @submit-date="getDate"/>
+          <home-date-picker @submit-dates="getDates" />
         </div>
 
         <div class="col-12 col-md-6 col-xl-3 mb-3 align-self-md-center mb-xl-4 align-self-xl-end">
-          <input type="checkbox" id="success-launches" class="form-check-input me-3" v-model="isChecked" />
+          <input
+            type="checkbox"
+            id="success-launches"
+            class="form-check-input me-3"
+            v-model="isChecked"
+          />
           <label for="success-launches" class="form-check-label">Pokaż tylko udane loty</label>
         </div>
 
         <div class="col-12 col-md-6 col-xl-3 mb-3 align-self-xl-end">
-          <button type="submit" class="w-100 btn btn-color" @click="search()">Szukaj</button>
+          <button
+            type="submit"
+            class="w-100 btn btn-color"
+            @click="search(searchedName, isChecked, dates)"
+          >
+            Szukaj
+          </button>
         </div>
 
       </div>
@@ -59,12 +81,12 @@ const isChecked = ref(false)
 
       <div class="row">
         <home-box
-          v-for="launch in launches"
+          v-for="launch in launchesToDisplay"
           :key="launch.id"
           :id="launch.id"
           :flight-number="launch.flight_number"
           :name="launch.name"
-          :date="formatDate(launch.date_local)"
+          :date="formatDate(launch.date_unix)"
           :img-source="launch.links.flickr.original?.[0]"
         />
       </div>
