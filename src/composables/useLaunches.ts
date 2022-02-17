@@ -12,8 +12,9 @@ export const useLaunches = () => {
     data.value.sort((first: any, second: any) => second.date_unix - first.date_unix)
   }
 
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-CA')
+  const formatDate = (unixTime: string) => {
+    const msPerSecond = 1000.0
+    return new Date(Number(unixTime) * msPerSecond).toLocaleDateString('en-CA')
   }
 
   return {
