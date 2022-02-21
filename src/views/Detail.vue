@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useLaunches } from '../composables/useLaunches'
-import { useRockects } from '../composables/useRockets'
+import { useRockets } from '../composables/useRockets'
 import { useLaunchpads } from '../composables/useLaunchpads'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Carousel from '../components/Carousel.vue'
@@ -14,7 +14,7 @@ const props = defineProps({
 })
 
 const { getLaunchById, data: launch, formatDate } = useLaunches()
-const { getRocketById, rocketName, rocketImages } = useRockects()
+const { getRocketById, rocketName, rocketImages } = useRockets()
 const { getLaunchpadById, launchpadName, launchpadLocality } = useLaunchpads()
 
 await getLaunchById(props.id)
