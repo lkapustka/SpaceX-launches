@@ -6,7 +6,7 @@ interface IRocket {
   flickr_images: string[]
 }
 
-export const useRockects = () => {
+export const useRockets = () => {
   const { getData, data } = useAxios()
 
   const getRocketById = async (id: string) => await getData(`rockets/${id}`)
