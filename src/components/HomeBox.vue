@@ -57,9 +57,9 @@ defineProps({
   padding: 0;
   margin-bottom: 1.5rem;
   border: none;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 0.5rem 1rem #00000026;
+  box-shadow: 0 1rem 3rem #0000002d;
 }
 
 .bg-color {

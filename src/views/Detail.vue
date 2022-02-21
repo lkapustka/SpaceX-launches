@@ -4,6 +4,7 @@ import { useLaunches } from '../composables/useLaunches'
 import { useRockects } from '../composables/useRockets'
 import { useLaunchpads } from '../composables/useLaunchpads'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Carousel from '../components/Carousel.vue'
 
 const props = defineProps({
   id: {
@@ -54,10 +55,9 @@ const formatStatus = (status: string) => (status ? 'Udany' : 'Nie udany')
         </div>
       </div>
 
+
       <div class="col-12 mb-4">
-        <div v-for="image in images">
-          <img :src="image" class="img-fluid" />
-        </div>
+        <carousel :carousel-slides="images"/>
       </div>
 
       <div class="col-12 mb-4" v-if="launch.details">
@@ -85,6 +85,6 @@ const formatStatus = (status: string) => (status ? 'Udany' : 'Nie udany')
   padding: 2rem;
   border: none;
   border-radius: 1rem;
-  box-shadow: 0 0.5rem 1rem #00000026;
+  box-shadow: 0 1rem 3rem #0000002d;
 }
 </style>
