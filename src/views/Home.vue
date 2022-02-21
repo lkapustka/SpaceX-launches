@@ -5,30 +5,35 @@ import { useSearch } from '../composables/useSearch'
 import HomeBox from '../components/HomeBox.vue'
 import HomeDatePicker from '../components/HomeDatePicker.vue'
 
+ interface ILaunch {
+    crew: string[],
+    date_unix: number,
+    details: string,
+    flight_number: number
+    id: string,
+    launchpad: string,
+    links: any,
+    name: string,
+    rocket: string,
+    success: boolean
+  }
+
 const { data, getLaunches, formatDate, sortLaunchesByNewest } = useLaunches()
-
 await getLaunches()
-
 sortLaunchesByNewest()
 
-const { searchResult, search } = useSearch(data.value)
-
+const { searchResult, search } = useSearch(data.value as ILaunch[])
 const launchesToDisplay = computed(() => filteredLaunches.value || rawLaunches.value)
 
 const quantityToDisplay = ref(20)
-
 const incrementBy20 = () => (quantityToDisplay.value = quantityToDisplay.value + 20)
 
-const rawLaunches = computed(() => data.value.slice(0, quantityToDisplay.value))
-
+const rawLaunches = computed(() => data.value?.slice(0, quantityToDisplay.value))
 const filteredLaunches = computed(() => searchResult.value?.slice(0, quantityToDisplay.value))
 
 const searchedName = ref('')
-
 const isChecked = ref(false)
-
-const dates = ref()
-
+const dates = ref<Date[] | null>(null)
 const getDates = (date: Date[]) => (dates.value = [date[0], date[1]])
 </script>
 
@@ -66,7 +71,7 @@ const getDates = (date: Date[]) => (dates.value = [date[0], date[1]])
           <button
             type="submit"
             class="w-100 btn btn-color"
-            @click="search(searchedName, isChecked, dates)"
+            @click="search(searchedName, isChecked, dates as Date[])"
           >
             Szukaj
           </button>
@@ -81,7 +86,7 @@ const getDates = (date: Date[]) => (dates.value = [date[0], date[1]])
 
       <div class="row">
         <home-box
-          v-for="launch in launchesToDisplay"
+          v-for="launch in (launchesToDisplay as ILaunch[])"
           :key="launch.id"
           :id="launch.id"
           :flight-number="launch.flight_number"

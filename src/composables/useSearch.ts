@@ -1,7 +1,19 @@
 import { ref, computed } from 'vue'
 
-export const useSearch = (rawData: any) => {
-  const searchableData = ref<object[] | null>(null)
+interface ILaunch {
+  crew: string[],
+  date_unix: number,
+  details: string,
+  flight_number: number
+  id: string,
+  launchpad: string,
+  name: string,
+  rocket: string,
+  success: boolean
+}
+
+export const useSearch = (rawData: ILaunch[]) => {
+  const searchableData = ref<ILaunch[] | null>(null)
 
   const inProgress = computed(() => !!searchableData.value)
 
@@ -9,12 +21,12 @@ export const useSearch = (rawData: any) => {
 
   const findLaunchesByName = (searchedName: string, launches = rawData) => {
     const regex = new RegExp(searchedName, 'gi')
-    return launches.filter((launch: any) => regex.test(launch.name))
+    return launches.filter(launch => regex.test(launch.name))
   }
 
   const searchForLaunchesByName = (searchedName: string) => {
     if (inProgress.value && searchedName.length > 0) {
-      searchableData.value = findLaunchesByName(searchedName, searchableData.value)
+      searchableData.value = findLaunchesByName(searchedName, searchableData.value as ILaunch[])
     }
     else if (searchedName.length > 0) {
       searchableData.value = findLaunchesByName(searchedName)
@@ -22,12 +34,12 @@ export const useSearch = (rawData: any) => {
   }
 
   const findSuccessfulLaunches = (launches = rawData) => {
-    return launches.filter((launch: any) => launch.success === true)
+    return launches.filter(launch => launch.success === true)
   }
 
   const searchForSuccessfulLaunches = (isChecked: boolean) => {
     if (inProgress.value && isChecked) {
-      searchableData.value = findSuccessfulLaunches(searchableData.value)
+      searchableData.value = findSuccessfulLaunches(searchableData.value as ILaunch[])
     }
     else if (isChecked) {
       searchableData.value = findSuccessfulLaunches()
@@ -48,14 +60,14 @@ export const useSearch = (rawData: any) => {
 
   const findLaunchesFromDatesRange = (unixDates: number[], launches = rawData) => {
     const [from, to] = unixDates
-    return launches.filter((launch: any) => launch.date_unix >= from && launch.date_unix <= to)
+    return launches.filter(launch => launch.date_unix >= from && launch.date_unix <= to)
   }
 
   const searchForLaunchesFromDatesRange = (dates: Date[]) => {
     const formatedDates = convertDatesToUnix(dates)
 
     if (inProgress.value && formatedDates) {
-      searchableData.value = findLaunchesFromDatesRange(formatedDates, searchableData.value)
+      searchableData.value = findLaunchesFromDatesRange(formatedDates, searchableData.value as ILaunch[])
     }
     else if (formatedDates) {
       searchableData.value = findLaunchesFromDatesRange(formatedDates)

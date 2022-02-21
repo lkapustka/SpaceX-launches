@@ -55,7 +55,6 @@ const formatStatus = (status: string) => (status ? 'Udany' : 'Nie udany')
         </div>
       </div>
 
-
       <div class="col-12 mb-4">
         <carousel :carousel-slides="images"/>
       </div>

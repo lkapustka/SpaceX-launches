@@ -2,7 +2,7 @@ import axios from 'axios'
 import { computed, ref } from 'vue'
 
 export const useAxios = () => {
-  const data = ref()
+  const data = ref<any | null>(null)
 
   const getData = async (route: string) => {
     try {

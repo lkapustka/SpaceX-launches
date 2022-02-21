@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-
-const props = defineProps({
+defineProps({
   images: {
     type: Array,
     required: true,
@@ -22,7 +20,7 @@ const props = defineProps({
 <template>
   <div class="container d-none d-xl-block">
     <div class="row flex-nowrap overflow-hidden" :class="[`row-cols-${slidesCount}`]">
-      <div v-for="(img, index) in images" :key="img" class="col d-flex">
+      <div v-for="(img, index) in (images as string[])" :key="img" class="col d-flex">
         <div class="thumbnail" :class="{ 'active': index + 1 === currentSlide }">
           <img :src="img" class="img-fluid" />
         </div>

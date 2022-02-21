@@ -34,7 +34,7 @@ const prevSlide = () => {
 
 <template>
   <div class="card p-0">
-    <carousel-slide v-for="(slide, index) in carouselSlides" :key="slide">
+    <carousel-slide v-for="(slide, index) in (carouselSlides as string[])" :key="slide ">
       <div v-show="currentSlide === index + 1" >
         <img :src="slide" class="img-fluid" />
       </div>

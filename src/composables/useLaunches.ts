@@ -1,6 +1,19 @@
 import { computed } from 'vue'
 import { useAxios } from './useAxios'
 
+interface ILaunch {
+  crew: string[],
+  date_unix: number,
+  details: string,
+  flight_number: number
+  id: string,
+  launchpad: string,
+  links: any,
+  name: string,
+  rocket: string,
+  success: boolean
+}
+
 export const useLaunches = () => {
   const { getData, data } = useAxios()
 
@@ -9,7 +22,7 @@ export const useLaunches = () => {
   const getLaunchById = async (id: string) => await getData(`launches/${id}`)
 
   const sortLaunchesByNewest = () => {
-    data.value.sort((first: any, second: any) => second.date_unix - first.date_unix)
+    (data.value as ILaunch[]).sort((a, b) => b.date_unix - a.date_unix)
   }
 
   const formatDate = (unixTime: string) => {
